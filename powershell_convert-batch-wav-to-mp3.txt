@@ -1,1 +1,0 @@
-Get-ChildItem '.\' -Filter *.wav | Foreach-Object {ffmpeg.exe -i "$_" -ar 44100 -ac 2 -b:a 320k "$_.BaseName.mp3"}
