@@ -1,0 +1,42 @@
+#Powershell convert .aiff to .mp3
+#add jpg image to file metadata
+#this one words for wav to mp3 also
+#there is a $basename var somewhere that might simplify this
+
+
+
+
+#for every file ending with .aiff from the current working directory, convert it to an file of mp3 format
+Get-ChildItem '.\' -Filter *.aiff | Foreach-Object {ffmpeg.exe -i "$_" -ar 44100 -ac 2 -b:a 320k "$_.mp3"}
+
+# for each of the tmp2 mp3 files, add the cover image
+Get-ChildItem '.\' -Filter *.aiff.mp3 | Foreach-Object {ffmpeg.exe -i "$_" -i "cover.jpg" -map 0:0 -map 1:0 -c copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "$_-320k.mp3"}
+
+# delete tmp1 mp3 and original aiff
+Get-ChildItem '.\' -Filter *.aiff.mp3 | Foreach-Object {rm $_} & Get-ChildItem '.\' -Filter *.aiff | Foreach-Object {rm $_}
+
+# rename tmp2 to proper mp3
+Get-ChildItem '.\' -Filter *.mp3 | Foreach-Object {$_ | Rename-Item -NewName $_.Name.Replace('.aiff.mp3-320k.mp3', '-320k.mp3')}
+
+
+
+
+###.wav
+
+#for every file ending with .wav from the current working directory, convert it to an file of mp3 format
+Get-ChildItem '.\' -Filter *.wav | Foreach-Object {ffmpeg.exe -i "$_" -ar 44100 -ac 2 -b:a 320k "$_.mp3"}
+
+# for each of the tmp2 mp3 files, add the cover image
+Get-ChildItem '.\' -Filter *.wav.mp3 | Foreach-Object {ffmpeg.exe -i "$_" -i "_______.png" -map 0:0 -map 1:0 -c copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (front)" "$_-320k.mp3"}
+
+# delete tmp1 mp3 and original wav
+Get-ChildItem '.\' -Filter *.wav.mp3 | Foreach-Object {rm $_} & Get-ChildItem '.\' -Filter *.wav | Foreach-Object {rm $_}
+
+# rename tmp2 to proper mp3
+Get-ChildItem '.\' -Filter *.mp3 | Foreach-Object {$_ | Rename-Item -NewName $_.Name.Replace('.wav.mp3-320k.mp3', '-320k.mp3')}
+
+
+
+
+
+
