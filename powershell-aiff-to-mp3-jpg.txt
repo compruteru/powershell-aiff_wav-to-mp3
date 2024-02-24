@@ -1,7 +1,8 @@
-#Powershell convert .aiff to .mp3
+#Powershell -- convert .wav/.aiff to .mp3 -- embed cover art if available
 #add jpg image to file metadata
 #this one words for wav to mp3 also
 #there is a $basename var somewhere that might simplify this
+#Flac stores metadata. aiff/wav don't containerise these things well. 
 
 
 
