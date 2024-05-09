@@ -39,5 +39,6 @@ Get-ChildItem '.\' -Filter *.mp3 | Foreach-Object {$_ | Rename-Item -NewName $_.
 
 
 
-
+###Save metadata from file for review
+ffmpeg.exe -i 'C:\Music\greatsongwithgoodtags.m4a' -f ffmetadata greatsongwithgoodtags.metadata.txt
 
