@@ -1,0 +1,12 @@
+#ffmpeg save windows 'Stereo Mix' audio input device stream to an mp3 file
+
+
+#see your device by running:
+ffmpeg -list_devices true -f dshow -i dummy
+#which will output some devices, and you should see something like:
+[dshow @ 000001727e88f640] "Stereo Mix (Conexant ISST Audio)" (audio)  
+
+#In which case, you know which device name to use for running the stream capture command:
+ffmpeg -f dshow -i audio="Stereo Mix (Conexant ISST Audio)" D:\Audio\test_sound_capture_output_file1.mp3
+
+#You now should have a stream saved to the location specified. Ctrl+C in the terminal will softly close the mp3 file away. 
