@@ -2,7 +2,7 @@
 #add jpg image to file metadata
 #this one words for wav to mp3 also
 #there is a $basename var somewhere that might simplify this
-#Flac stores metadata. aiff/wav don't containerise these things well. 
+#Flac stores metadata. aiff/wav don't containerise these things well.
 
 
 
@@ -42,3 +42,16 @@ Get-ChildItem '.\' -Filter *.mp3 | Foreach-Object {$_ | Rename-Item -NewName $_.
 ###Save metadata from file for review
 ffmpeg.exe -i 'C:\Music\greatsongwithgoodtags.m4a' -f ffmetadata greatsongwithgoodtags.metadata.txt
 
+###print metadata to console
+ffprobe filename.mp3
+
+##Save metadata for some mp3s
+cd c:\tmp
+Get-ChildItem '.\Royalty*\Royalty Free\*' -Filter *.mp3 | Foreach-Object {ffprobe -loglevel 0 -print_format json -show_format -show_streams "$_" -o "$_.probe.txt"}
+
+
+### trim part of a file (save start time point up to end time point, ffprobe to see total length)
+ffmpeg.exe -ss 00:00:00 -to 00:11:52 -i C:\Music\Misc\agilebusdev_short_.mp3 -c copy C:\Music\Misc\agilebusdev_short.mp3
+
+##trim first 21 seconds from mp3 file, and up to end timepoint
+ffmpeg.exe -ss 00:00:21 -to 00:12:19.45 -i C:\Music\Misc\agilebusdev_short.mp3 -c copy C:\Music\Misc\agilebusdev_short_.mp3
