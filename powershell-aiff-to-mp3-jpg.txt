@@ -55,3 +55,19 @@ ffmpeg.exe -ss 00:00:00 -to 00:11:52 -i C:\Music\Misc\agilebusdev_short_.mp3 -c 
 
 ##trim first 21 seconds from mp3 file, and up to end timepoint
 ffmpeg.exe -ss 00:00:21 -to 00:12:19.45 -i C:\Music\Misc\agilebusdev_short.mp3 -c copy C:\Music\Misc\agilebusdev_short_.mp3
+
+
+
+
+
+##Get playlist item urls to file(this appears unecessary when using the archive file below
+yt-dlp.exe --flat-playlist --get-url https://soundcloud.com/username/likes >> likes_pl.txt
+yt-dlp.exe -flat-playlist -get-url https://soundcloud.com/username/reposts >> reposts_pl.txt
+
+
+##Try first format, then try second format (which will skip already completed files from the archive file
+yt-dlp.exe --download-archive .\reposts_pl.archive --embed-thumbnail --add-metadata -f http_mp3_128 https://soundcloud.com/username/reposts
+yt-dlp.exe --download-archive .\reposts_pl.archive --embed-thumbnail --add-metadata -f hls_mp3_128 https://soundcloud.com/username/reposts
+yt-dlp.exe --download-archive .\likes_pl.archive --embed-thumbnail --add-metadata -f hls_mp3_128 https://soundcloud.com/username/likes
+yt-dlp.exe --download-archive .\likes_pl.archive --embed-thumbnail --add-metadata -f hls_mp3 https://soundcloud.com/username/likes
+
